@@ -44,9 +44,8 @@ $.ajax({
     url: randomUserUrl,
     success: function(response){
         myData.push(...response.results);
-        buildTable(myData)
-        getNumbers();
-        getBoringData();  
+        buildTable(myData);
+        getHeaderData();
         showHeadings();
         loading = false;
         loadingAni();
@@ -54,9 +53,8 @@ $.ajax({
 });
 };
 
-
-function getNumbers(){
-    $.ajax({
+function getHeaderData(){
+     $.ajax({
         method: 'GET',
         url: numbersUrl,
         success: function(response){
@@ -64,9 +62,6 @@ function getNumbers(){
             numberDisplay.innerHTML = numbersData;
         }
     });
-};
-
-function getBoringData(){
     $.ajax({
         method: 'GET',
         url: boredUrl,
@@ -77,8 +72,8 @@ function getBoringData(){
     });
 };
 
-// Function to iterate over myData array and dynamically build a table to display returned data
 
+// Function to iterate over myData array and dynamically build a table to display returned data
 function buildTable(data){
     let table = document.getElementById('myTable');
     table.innerHTML = '';
@@ -94,42 +89,45 @@ function buildTable(data){
 };
 
 // Reverting display properties of headings after successful API call
-
 function showRandoms(){
      randomNumberFact.style.display = 'inline-block';
      randomActivity.style.display = 'block';
      tableHeaders.style.display = 'revert';
-}
+};
+
 
 // Displaying the headings if the myData array has been fully populated by the getRandomData function
-
 function showHeadings(){
     showRandoms();
-}
+};
+
 
 // Adding an onclick function to the dynamically created table data elements -- the full names which are returned
-
+// Calls the getHeaderData function to return the two API calls to numbersUrl & boredUrl
 $('table').on('click', '#name', function(){
-    getBoringData(), getNumbers()});
+    getHeaderData();
+});
+
 
 // Sorting function to sort the myData array in alphabetical order when clicked
-
  $('#sort-button').on('click', function(){
      let order = $(this).data('order');
      let text = $(this).html();
+     let sortedData;
      text = text.substring(0, text.length -1)
      if(order == 'desc'){
          $(this).data('order', 'asc');
-         myData = myData.sort((a, b) => a.name.first.localeCompare(b.name.first));
+         sortedData = myData.sort((a, b) => a.name.first.localeCompare(b.name.first));
          text += '&#9650';
      } else{
          $(this).data('order', 'desc');
-         myData = myData.sort((a, b) => b.name.first.localeCompare(a.name.first));
+         sortedData = myData.sort((a, b) => b.name.first.localeCompare(a.name.first));
          text += '&#9660';
      }
      $(this).html(text)
-     buildTable(myData);
-     })
+     buildTable(sortedData);
+     });
+
 
 // Loading animation function
 function loadingAni(){

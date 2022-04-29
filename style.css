@@ -11,6 +11,7 @@ h3{
 
 .table{
     width: 80%!important;
+    opacity: 0.9;
 }
 #data-button{
     display: inline-block;
@@ -37,7 +38,6 @@ h3{
 
 .bg-info{
     display: none;
-    
 }
 
 #name:hover{
@@ -121,6 +121,6 @@ h3{
 }
 
 #home-body{
-    background-color: #e1eeed;
+    background-color: #59BFD6 ;
 }
 
